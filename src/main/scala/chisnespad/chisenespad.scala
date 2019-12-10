@@ -11,13 +11,13 @@ class ChisNesPad extends Module {
     val dlatch = Output(Bool())
     val sdata  = Input(Bool())
     /* read/valid output */
-    val data = Decoupled(Output(UInt(16.W))) 
+    val data = Decoupled(Output(UInt(16.W)))
   })
 
-  io.dclock := false.B
-  io.dlatch := false.B
-  io.data.bits := 0.U
-  io.data.valid := false.B
+  io.dclock := DontCare
+  io.dlatch := DontCare
+  io.data.bits := DontCare
+  io.data.valid := DontCare
 }
 
 object ChisNesPad extends App {
