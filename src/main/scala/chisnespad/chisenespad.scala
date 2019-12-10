@@ -14,6 +14,8 @@ class ChisNesPad extends Module {
     val data = Decoupled(Output(UInt(16.W)))
   })
 
+  
+
   io.dclock := DontCare
   io.dlatch := DontCare
   io.data.bits := DontCare

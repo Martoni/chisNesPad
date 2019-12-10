@@ -1,0 +1,3 @@
+[submodule "chisverilogutils"]
+	path = chisverilogutils
+	url = https://github.com/Martoni/chisverilogutils.git
