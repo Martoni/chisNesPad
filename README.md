@@ -32,3 +32,9 @@ Formal description and prove are in directory formal/. To launch prove do follow
 $ cd formal
 $ make
 ```
+
+# Ressources
+
+SNES pad is composed of two 4021 shift buffers. The pinout is given
+[here](https://pinoutguide.com/Game/snescontroller_pinout.shtml) and a datasheet
+of shift register can be [found here](http://www.st.com/content/ccc/resource/technical/document/datasheet/aa/2e/a7/49/58/cc/4a/9e/CD00002651.pdf/files/CD00002651.pdf/jcr:content/translations/en.CD00002651.pdf)
