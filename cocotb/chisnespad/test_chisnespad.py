@@ -63,24 +63,23 @@ class ChisNesPadTest(object):
     @cocotb.coroutine
     def _register(self):
 
-        while True: # XXX manage reset/load value
+        while True:
             try: 
                 dlatch = int(self._dut.io_dlatch)
             except ValueError:
                 dlatch = 1
             if dlatch != 0:
-                yield RisingEdge(self._dut.clock)
+                yield FallingEdge(self._dut.io_dlatch)
                 self._reg = self.reg_init_value
-                sdata_bit = self.reg_init_value & (0x1<<(self._reg_len-1))
-                self._dut.io_sdata <= (sdata_bit != 0)
+                self._reg_count = self._reg_len
+                sdata_bit = (self.reg_init_value & (0x1<<(self._reg_len-1))) >> (self._reg_len - 1)
+                self._dut.io_sdata <= sdata_bit
             else:
                 sdata_bit = self._reg & (0x1<<(self._reg_len-1))
                 self._dut.io_sdata <= (sdata_bit != 0)
-                if self._reg_count == 0:
-                    self._reg = self.reg_init_value
-                else:
+                if self._reg_count != 0:
                     self._reg = (self._reg << 1)
-                yield RisingEdge(self._dut.io_dclock)
+                yield [RisingEdge(self._dut.io_dclock), RisingEdge(self._dut.io_dlatch)]
 
 @cocotb.test()#skip=True)
 def simple_test(dut):
@@ -93,7 +92,39 @@ def simple_test(dut):
     if vread != cnpt.reg_init_value:
         msg = ("Wrong value read {:04X}, should be {:04X}"
                 .format(vread, cnpt.reg_init_value))
-        dut.log.error(mgg)
+        dut.log.error(msg)
+        raise TestError(msg)
+    cnpt.log.info("Value read {:04X}".format(vread))
+    yield FallingEdge(dut.io_data_valid)
+    dut.io_data_ready <= 0
+    yield Timer(1, units="us")
+
+@cocotb.test()#skip=True)
+def double_test(dut):
+    cnpt = ChisNesPadTest(dut)
+    yield cnpt.reset()
+    yield Timer(1, units="us")
+    dut.io_data_ready <= 1
+    yield RisingEdge(dut.io_data_valid)
+    vread = int(dut.io_data_bits)
+    if vread != cnpt.reg_init_value:
+        msg = ("Wrong value read {:04X}, should be {:04X}"
+                .format(vread, cnpt.reg_init_value))
+        dut.log.error(msg)
+        raise TestError(msg)
+    cnpt.log.info("Value read {:04X}".format(vread))
+    yield FallingEdge(dut.io_data_valid)
+    dut.io_data_ready <= 0
+    yield Timer(1, units="us")
+
+    cnpt.reg_init_value = 0xDECA
+    dut.io_data_ready <= 1
+    yield RisingEdge(dut.io_data_valid)
+    vread = int(dut.io_data_bits)
+    if vread != cnpt.reg_init_value:
+        msg = ("Wrong value read {:04X}, should be {:04X}"
+                .format(vread, cnpt.reg_init_value))
+        dut.log.error(msg)
         raise TestError(msg)
     cnpt.log.info("Value read {:04X}".format(vread))
     yield FallingEdge(dut.io_data_valid)

@@ -30,6 +30,7 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   /* State machine declarations */
   val sinit::schigh::sclow::svalid::Nil = Enum(4)
   val stateReg = RegInit(sinit)
+  val validReg = RegInit(false.B)
 
   /* counter */
   riseReg := 0.U
@@ -54,10 +55,11 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   
 
   /* state machine */
-  io.data.valid := 0.U
+  validReg := 0.U
   switch(stateReg){
     is(sinit){
-      when(io.data.ready){
+      regCount := regLen.U
+      when(io.data.ready && !io.data.valid){
         stateReg := sclow
         countReg := 0.U
       }
@@ -79,13 +81,14 @@ class ChisNesPad (val mainClockFreq: Int = 100,
     }
     is(svalid){
       stateReg := sinit
-      io.data.valid := 1.U
+      validReg := 1.U
     }
   }
 
-  io.dclock := (stateReg === schigh)
-  io.dlatch := (stateReg === sinit)
+  io.dclock := RegNext(stateReg === schigh)
+  io.dlatch := RegNext(stateReg === sinit)
   io.data.bits := padReg
+  io.data.valid := validReg
 }
 
 object ChisNesPad extends App {
