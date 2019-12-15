@@ -62,7 +62,7 @@ endif
 $(PWD)/$(TOPLEVEL)Cocotb.v: $(PWD)/../../$(TOPLEVEL).v
 	python $(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
 
-$(PWD)/../../$(TOPLEVEL).v:
+$(PWD)/../../$(TOPLEVEL).v: $(PWD)/../../src/main/scala/chisnespad/chisenespad.scala
 	cd $(PWD)/../../;sbt "runMain chisnespad.ChisNesPad"
 
 cleanverilog:
