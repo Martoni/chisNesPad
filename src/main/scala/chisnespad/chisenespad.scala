@@ -58,7 +58,7 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   switch(stateReg){
     is(sinit){
       when(io.data.ready){
-        stateReg := schigh
+        stateReg := sclow
         countReg := 0.U
       }
     }
