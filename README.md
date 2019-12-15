@@ -13,7 +13,7 @@ $ git clone --recurse-submodules https://github.com/Martoni/chisNesPad.git
 Description code is under directory src/main/scala/chisnespad/. To generate verilog synthesizable code do following ::
 
 ```
-$ sbt "runMain chisnespad.chisnespad"
+$ sbt "runMain chisnespad.ChisNesPad"
 ```
 
 ## Cocotb
