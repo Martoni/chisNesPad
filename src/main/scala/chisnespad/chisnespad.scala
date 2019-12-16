@@ -6,7 +6,7 @@ import chisel3.Driver
 
 class ChisNesPad (val mainClockFreq: Int = 100,
                   val clockFreq: Int = 1,
-                  val regLen: Int = 16)extends Module {
+                  val regLen: Int = 16) extends Module {
   val io = IO(new Bundle{
     /* SNES Pinout */
     val dclock = Output(Bool())
