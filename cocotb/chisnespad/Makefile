@@ -62,7 +62,7 @@ endif
 $(PWD)/$(TOPLEVEL)Cocotb.v: $(PWD)/../../$(TOPLEVEL).v
 	python $(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
 
-$(PWD)/../../$(TOPLEVEL).v: $(PWD)/../../src/main/scala/chisnespad/chisenespad.scala
+$(PWD)/../../$(TOPLEVEL).v: $(PWD)/../../src/main/scala/chisnespad/chisnespad.scala
 	cd $(PWD)/../../;sbt "runMain chisnespad.ChisNesPad"
 
 cleanverilog:
@@ -72,3 +72,4 @@ mrproper:
 	-rm results.xml
 	-rm $(TOPLEVEL).vcd
 	-rm $(TOPLEVEL)Cocotb.v
+	-rm -rf __pycache__
