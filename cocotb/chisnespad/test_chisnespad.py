@@ -131,3 +131,12 @@ def double_test(dut):
     dut.io_data_ready <= 0
     yield Timer(1, units="us")
 
+@cocotb.test()
+def always_ready(dut):
+    cnpt = ChisNesPadTest(dut)
+    yield cnpt.reset()
+    yield Timer(1, units="us")
+    dut.io_data_ready <= 1
+    yield Timer(400, units="us")
+
+
