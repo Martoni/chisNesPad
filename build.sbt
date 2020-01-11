@@ -51,8 +51,8 @@ scalacOptions ++= Seq("-deprecation", "-feature")
 
 scalacOptions ++= Seq("-language:reflectiveCalls")
 
-//publish local https://github.com/Martoni/WbPlumbing.git
-//libraryDependencies ++= Seq("org.armadeus" %% "wbplumbing" % "0.1")
+//publish local https://github.com/Martoni/fpgamacro.git
+libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "0.1")
 
 scalacOptions ++= scalacOptionsVersion(scalaVersion.value)
 
