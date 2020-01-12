@@ -6,7 +6,8 @@ import chisel3.Driver
 import fpgamacro.generic.ResetGen
 
 class SNesPadLed(val mainClockFreq: Int = 100,
-                 val clockFreq: Int = 1) extends Module {
+                 val clockFreq: Int = 1) extends RawModule {
+  val clock = IO(Input(Clock()))
   val io = IO(new Bundle{
     /* SNES Pinout */
     val dclock = Output(Bool())
@@ -18,9 +19,10 @@ class SNesPadLed(val mainClockFreq: Int = 100,
     val ledblue = Output(Bool())
   })
 
+
   val rstgen = Module(new ResetGen())
   rstgen.io.clk := clock
-  withReset(rstgen.io.rst){
+  withClockAndReset(clock, rstgen.io.rst){
     /* registering pad values */
     val sNesPadReg = RegInit(0.U(16.W))
 
