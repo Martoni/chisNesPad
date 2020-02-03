@@ -1,0 +1,13 @@
+[options]
+mode bmc 
+depth 30
+
+[engines]
+smtbmc
+
+[script]
+read -formal ChisNesPadFormal.sv
+prep -top ChisNesPad
+
+[files]
+ChisNesPadFormal.sv

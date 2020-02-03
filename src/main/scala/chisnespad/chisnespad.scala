@@ -28,6 +28,7 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   val padReg = RegInit(0.U(regLen.W))
 
   /* State machine declarations */
+  /*    00     01      10     11 */
   val sinit::schigh::sclow::svalid::Nil = Enum(4)
   val stateReg = RegInit(sinit)
   val validReg = RegInit(false.B)
