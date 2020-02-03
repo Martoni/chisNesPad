@@ -6,6 +6,7 @@ TOPMODULE=ChisNesPad
 all: $(TOPMODULE)/PASS
 
 $(TOPMODULE)/PASS: $(TOPMODULE).sby $(TOPMODULE)Formal.sv
+	-rm -rf $(TOPMODULE)
 	$(SBY) $(TOPMODULE).sby
 
 $(TOPMODULE)Formal.sv: $(TOPMODULE).v $(TOPMODULE)Rules.sv
