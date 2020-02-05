@@ -38,6 +38,9 @@ $ make
 Tools from [chisverilogutils](https://github.com/Martoni/chisverilogutils.git) are required for this project. See the project
 readme for install instruction.
 
+## fpgamacro
+
+Need to install/publish local [fpgamacro](https://github.com/Martoni/fpgamacro.git) project.
 
 # Ressources
 
