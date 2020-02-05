@@ -2,10 +2,10 @@
 Chisel Super Nes pad controller
 
 ## Intro
-Control Super Nes pad controller with a chisel component. Git subproject named [chisverilogutils](https://github.com/Martoni/chisverilogutils) is used for cocotb waveform generation and for formal prove injection, then to clone this project, dont forget to add submodule option ::
+Control Super Nes pad controller with a chisel component. Git subproject named [chisverilogutils](https://github.com/Martoni/chisverilogutils) is used for cocotb waveform generation and for formal prove injection, then to clone this project ::
 
 ```
-$ git clone --recurse-submodules https://github.com/Martoni/chisNesPad.git
+$ git clone https://github.com/Martoni/chisNesPad.git
 ```
 
 ## Chisel
@@ -32,6 +32,12 @@ Formal description and prove are in directory formal/. To launch prove do follow
 $ cd formal
 $ make
 ```
+
+## chisverilogutils
+
+Tools from [chisverilogutils](https://github.com/Martoni/chisverilogutils.git) are required for this project. See the project
+readme for install instruction.
+
 
 # Ressources
 
