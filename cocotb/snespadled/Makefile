@@ -30,7 +30,7 @@
 
 TOPLEVEL_LANG ?= verilog
 SIM=icarus
-COCOTBIFY=../../chisverilogutils/cocotbify/cocotbify.py
+COCOTBIFY=cocotbify
 
 ifneq ($(TOPLEVEL_LANG),verilog)
 
@@ -51,7 +51,8 @@ endif
 
 PWD=$(shell pwd)
 
-VERILOG_SOURCES = $(PWD)/$(TOPLEVEL)Cocotb.v
+VERILOG_SOURCES = $(PWD)/$(TOPLEVEL)Cocotb.v \
+				  $(PWD)/../../ResetGen.v
 MODULE=test_snespadled
 
 include $(shell cocotb-config --makefiles)/Makefile.inc
@@ -60,7 +61,7 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 endif
 
 $(PWD)/$(TOPLEVEL)Cocotb.v: $(PWD)/../../$(TOPLEVEL).v
-	python $(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
+	$(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
 
 $(PWD)/../../$(TOPLEVEL).v: $(PWD)/../../src/main/scala/chisnespad/chisnespad.scala\
 							$(PWD)/../../src/main/scala/chisnespad/snespadled.scala

@@ -51,12 +51,7 @@ class SNesPadTest(object):
     @cocotb.coroutine
     def reset(self):
         short_per = Timer(100, units="ns")
-        self._dut.reset <= 1
         self._dut.io_sdata <= 0
-        yield short_per
-        self._dut.reset <= 1
-        yield short_per
-        self._dut.reset <= 0
         yield short_per
 
     @cocotb.coroutine

@@ -30,7 +30,7 @@
 
 TOPLEVEL_LANG ?= verilog
 SIM=icarus
-COCOTBIFY=../../chisverilogutils/cocotbify/cocotbify.py
+COCOTBIFY=cocotbify
 
 ifneq ($(TOPLEVEL_LANG),verilog)
 
@@ -60,7 +60,7 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 endif
 
 $(PWD)/$(TOPLEVEL)Cocotb.v: $(PWD)/../../$(TOPLEVEL).v
-	python $(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
+	$(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
 
 $(PWD)/../../$(TOPLEVEL).v: $(PWD)/../../src/main/scala/chisnespad/chisnespad.scala
 	cd $(PWD)/../../;sbt "runMain chisnespad.ChisNesPad"
