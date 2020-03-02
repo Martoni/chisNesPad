@@ -31,6 +31,7 @@
 TOPLEVEL_LANG ?= verilog
 SIM=icarus
 COCOTBIFY=cocotbify
+export COCOTB_REDUCED_LOG_FMT=1
 
 ifneq ($(TOPLEVEL_LANG),verilog)
 
