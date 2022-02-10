@@ -2,7 +2,7 @@ package chisnespad
 
 import chisel3._
 import chisel3.util._
-import chisel3.Driver
+import chisel3.stage.{ChiselGeneratorAnnotation,ChiselStage}
 
 class ChisNesPad (val mainClockFreq: Int = 100,
                   val clockFreq: Int = 1,
@@ -94,5 +94,7 @@ class ChisNesPad (val mainClockFreq: Int = 100,
 
 object ChisNesPad extends App {
   println("Generating Verilog sources for ChisNesPad Module")
-  chisel3.Driver.execute(Array[String](), () => new ChisNesPad)
+  (new ChiselStage).execute(args,
+    Seq(ChiselGeneratorAnnotation(() => new ChisNesPad)))
+
 }

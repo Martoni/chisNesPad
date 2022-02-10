@@ -2,7 +2,7 @@ package chisnespad
 
 import chisel3._
 import chisel3.util._
-import chisel3.Driver
+import chisel3.stage.{ChiselGeneratorAnnotation,ChiselStage}
 import fpgamacro.generic.ResetGen
 
 class SNesPadLed(val mainClockFreq: Int = 100,
@@ -58,5 +58,6 @@ class SNesPadLed(val mainClockFreq: Int = 100,
 
 object SNesPadLed extends App {
   println("Generating snespadled verilog")
-  chisel3.Driver.execute(Array[String](), () => new SNesPadLed())
+  (new ChiselStage).execute(args,
+    Seq(ChiselGeneratorAnnotation(() => new SNesPadLed())))
 }
