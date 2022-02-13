@@ -18,6 +18,7 @@ class ChisNesPad (val mainClockFreq: Int = 100,
 
   /* counter declarations*/
   val maxCount = mainClockFreq/clockFreq
+  assert(maxCount > 1, "maxCount can't be " + maxCount)
   val halfMaxCount = maxCount/2
   val countReg = RegInit(0.U(log2Ceil(maxCount + 1).W))
   val fallReg = RegInit(false.B)
