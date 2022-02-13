@@ -25,22 +25,22 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   val riseReg = RegInit(false.B)
 
   /* shift register (pad) declarations */
-  val regCount = RegInit(regLen.U(5.W))
+  val regCount = RegInit((regLen + 1).U(5.W))
   val padReg = RegInit(0.U(regLen.W))
 
   /* State machine declarations */
-  /*    00     01      10     11 */
-  val sinit::schigh::sclow::svalid::Nil = Enum(4)
+  /*    000    001    010    011     100*/
+  val sinit::schigh::sclow::svalid::slatch::Nil = Enum(5)
   val stateReg = RegInit(sinit)
   val validReg = RegInit(false.B)
 
   /* counter */
-  riseReg := 0.U
+  riseReg := false.B
   fallReg := 0.U
-  when(stateReg === sclow || stateReg === schigh){
+  when(stateReg === sclow || stateReg === schigh || stateReg === slatch){
     when(countReg >= maxCount.U){
       countReg := 0.U
-      riseReg := 1.U
+      riseReg := true.B
     }.elsewhen(countReg === halfMaxCount.U){
       fallReg := 1.U
       countReg := countReg + 1.U
@@ -60,10 +60,15 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   validReg := 0.U
   switch(stateReg){
     is(sinit){
-      regCount := regLen.U
+      regCount := (regLen + 1).U
       when(io.data.ready && !io.data.valid){
-        stateReg := sclow
+        stateReg := slatch
         countReg := 0.U
+      }
+    }
+    is(slatch){
+      when(riseReg){
+        stateReg := sclow
       }
     }
     is(sclow){
@@ -88,7 +93,7 @@ class ChisNesPad (val mainClockFreq: Int = 100,
   }
 
   io.dclock := RegNext(stateReg === schigh)
-  io.dlatch := RegNext(stateReg === sinit)
+  io.dlatch := RegNext(stateReg === slatch)
   io.data.bits := padReg
   io.data.valid := validReg
 }

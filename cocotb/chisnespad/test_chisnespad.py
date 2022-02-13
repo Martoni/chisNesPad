@@ -33,6 +33,7 @@ class ChisNesPadTest(object):
         if sys.version_info[0] < 3:
             raise Exception("Must be using Python 3")
         self._dut = dut
+        self._log = dut._log
         self._dut._log.setLevel(self.LOGLEVEL)
         self.reg_init_value = reg_init_value
         self._reg = reg_init_value

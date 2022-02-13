@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.98 (w)1999-2019 BSI
+[*] Sun Feb 13 21:04:49 2022
+[*]
+[dumpfile] "/home/fabien/myapp/chisNesPad/cocotb/chisnespad/ChisNesPad.vcd"
+[dumpfile_mtime] "Sun Feb 13 21:01:15 2022"
+[dumpfile_size] 1830527
+[savefile] "/home/fabien/myapp/chisNesPad/cocotb/chisnespad/chisnespad.gtkw"
+[timestart] 0
+[size] 1920 1030
+[pos] -1 -428
+*-22.659693 3360000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 220
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 302
+@22
+ChisNesPad.io_data_bits[15:0]
+@28
+ChisNesPad.io_data_ready
+ChisNesPad.io_data_valid
+ChisNesPad.io_dclock
+ChisNesPad.io_dclock_REG
+ChisNesPad.io_dlatch
+ChisNesPad.io_dlatch_REG
+ChisNesPad.io_sdata
+[pattern_trace] 1
+[pattern_trace] 0
