@@ -11,10 +11,8 @@ import os
 import sys
 import cocotb
 import logging
-from cocotb import SimLog
 from cocotb.clock import Clock
 from cocotb.triggers import Timer
-from cocotb.result import TestError
 from cocotb.result import ReturnValue
 from cocotb.result import raise_error
 from cocotb.binary import BinaryValue
@@ -36,8 +34,6 @@ class ChisNesPadTest(object):
             raise Exception("Must be using Python 3")
         self._dut = dut
         self._dut._log.setLevel(self.LOGLEVEL)
-        self.log = SimLog("ChisNesPad.{}".format(self.__class__.__name__))
-        self.log.setLevel(self.LOGLEVEL)
         self.reg_init_value = reg_init_value
         self._reg = reg_init_value
         self._reg_count = reg_len
@@ -49,13 +45,13 @@ class ChisNesPadTest(object):
     @cocotb.coroutine
     def reset(self):
         short_per = Timer(100, units="ns")
-        self._dut.reset <= 1
-        self._dut.io_sdata <= 0
-        self._dut.io_data_ready <= 0
+        self._dut.reset.value = 1
+        self._dut.io_sdata.value = 0
+        self._dut.io_data_ready.value = 0
         yield short_per
-        self._dut.reset <= 1
+        self._dut.reset.value = 1
         yield short_per
-        self._dut.reset <= 0
+        self._dut.reset.value = 0
         yield short_per
 
     @cocotb.coroutine
@@ -71,10 +67,10 @@ class ChisNesPadTest(object):
                 self._reg = self.reg_init_value
                 self._reg_count = self._reg_len
                 sdata_bit = (self.reg_init_value & (0x1<<(self._reg_len-1))) >> (self._reg_len - 1)
-                self._dut.io_sdata <= sdata_bit
+                self._dut.io_sdata.value = sdata_bit
             else:
                 sdata_bit = self._reg & (0x1<<(self._reg_len-1))
-                self._dut.io_sdata <= (sdata_bit != 0)
+                self._dut.io_sdata.value = (sdata_bit != 0)
                 if self._reg_count != 0:
                     self._reg = (self._reg << 1)
                 yield [RisingEdge(self._dut.io_dclock), RisingEdge(self._dut.io_dlatch)]
@@ -84,17 +80,17 @@ def simple_test(dut):
     cnpt = ChisNesPadTest(dut)
     yield cnpt.reset()
     yield Timer(1, units="us")
-    dut.io_data_ready <= 1
+    dut.io_data_ready.value = 1
     yield RisingEdge(dut.io_data_valid)
     vread = int(dut.io_data_bits)
     if vread != cnpt.reg_init_value:
         msg = ("Wrong value read {:04X}, should be {:04X}"
                 .format(vread, cnpt.reg_init_value))
-        dut.log.error(msg)
-        raise TestError(msg)
-    cnpt.log.info("Value read {:04X}".format(vread))
+        dut._log.error(msg)
+        raise Exception(msg)
+    cnpt._log.info("Value read {:04X}".format(vread))
     yield FallingEdge(dut.io_data_valid)
-    dut.io_data_ready <= 0
+    dut.io_data_ready.value = 0
     yield Timer(1, units="us")
 
 @cocotb.test()#skip=True)
@@ -102,31 +98,31 @@ def double_test(dut):
     cnpt = ChisNesPadTest(dut)
     yield cnpt.reset()
     yield Timer(1, units="us")
-    dut.io_data_ready <= 1
+    dut.io_data_ready.value = 1
     yield RisingEdge(dut.io_data_valid)
     vread = int(dut.io_data_bits)
     if vread != cnpt.reg_init_value:
         msg = ("Wrong value read {:04X}, should be {:04X}"
                 .format(vread, cnpt.reg_init_value))
-        dut.log.error(msg)
-        raise TestError(msg)
-    cnpt.log.info("Value read {:04X}".format(vread))
+        dut._log.error(msg)
+        raise Exception(msg)
+    cnpt._log.info("Value read {:04X}".format(vread))
     yield FallingEdge(dut.io_data_valid)
-    dut.io_data_ready <= 0
+    dut.io_data_ready.value = 0
     yield Timer(1, units="us")
 
     cnpt.reg_init_value = 0xDECA
-    dut.io_data_ready <= 1
+    dut.io_data_ready.value = 1
     yield RisingEdge(dut.io_data_valid)
     vread = int(dut.io_data_bits)
     if vread != cnpt.reg_init_value:
         msg = ("Wrong value read {:04X}, should be {:04X}"
                 .format(vread, cnpt.reg_init_value))
-        dut.log.error(msg)
-        raise TestError(msg)
-    cnpt.log.info("Value read {:04X}".format(vread))
+        dut._log.error(msg)
+        raise Exception(msg)
+    cnpt._log.info("Value read {:04X}".format(vread))
     yield FallingEdge(dut.io_data_valid)
-    dut.io_data_ready <= 0
+    dut.io_data_ready.value = 0
     yield Timer(1, units="us")
 
 @cocotb.test()
@@ -134,7 +130,7 @@ def always_ready(dut):
     cnpt = ChisNesPadTest(dut)
     yield cnpt.reset()
     yield Timer(1, units="us")
-    dut.io_data_ready <= 1
+    dut.io_data_ready.value = 1
     yield Timer(400, units="us")
 
 
