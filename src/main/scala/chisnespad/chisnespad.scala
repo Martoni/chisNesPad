@@ -102,5 +102,4 @@ object ChisNesPad extends App {
   println("Generating Verilog sources for ChisNesPad Module")
   (new ChiselStage).execute(args,
     Seq(ChiselGeneratorAnnotation(() => new ChisNesPad)))
-
 }
