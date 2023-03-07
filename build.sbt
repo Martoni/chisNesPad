@@ -1,20 +1,21 @@
 // See README.md for license details.
 
 scalaVersion     := "2.13.8"
-version          := "0.2.0"
+version          := "0.2.1"
 organization     := "Martoni"
 
-githubOwner := "Martoni"
-githubRepository := "fpgamacro"
+val majorChiselVersion = "3"
+val minorChiselVersion = "5.4"
+val chiselVersion = majorChiselVersion + "." + minorChiselVersion
+
 
 lazy val root = (project in file("."))
   .settings(
     name := "chisNesPad",
-    externalResolvers += "fpgamacro packages" at "https://maven.pkg.github.com/Martoni/fpgamacro",
     libraryDependencies ++= Seq(
-      "edu.berkeley.cs" %% "chisel3" % "3.5.1",
-      "edu.berkeley.cs" %% "chiseltest" % "0.5.1" % "test",
-      "Martoni" %% "fpgamacro" % "0.2.0",
+      "edu.berkeley.cs" %% "chisel3" % chiselVersion,
+      "edu.berkeley.cs" %% "chiseltest" % ("0." + minorChiselVersion) % "test",
+      "Martoni" %% "fpgamacro" % "0.2.2",
     ),
     scalacOptions ++= Seq(
       "-Xsource:2.11",
@@ -24,5 +25,5 @@ lazy val root = (project in file("."))
       "-Xcheckinit",
       "-P:chiselplugin:useBundlePlugin"
     ),
-    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % "3.5.1" cross CrossVersion.full),
+    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full),
   )
