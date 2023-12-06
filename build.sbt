@@ -4,17 +4,12 @@ scalaVersion     := "2.13.8"
 version          := "0.2.1"
 organization     := "Martoni"
 
-val majorChiselVersion = "3"
-val minorChiselVersion = "5.4"
-val chiselVersion = majorChiselVersion + "." + minorChiselVersion
-
-
 lazy val root = (project in file("."))
   .settings(
     name := "chisNesPad",
     libraryDependencies ++= Seq(
-      "edu.berkeley.cs" %% "chisel3" % chiselVersion,
-      "edu.berkeley.cs" %% "chiseltest" % ("0." + minorChiselVersion) % "test",
+      "edu.berkeley.cs" %% "chisel3" % "3.5.1",
+      "edu.berkeley.cs" %% "chiseltest" % "0.5.1" % "test",
       "Martoni" %% "fpgamacro" % "0.2.2",
     ),
     scalacOptions ++= Seq(
@@ -25,5 +20,5 @@ lazy val root = (project in file("."))
       "-Xcheckinit",
       "-P:chiselplugin:useBundlePlugin"
     ),
-    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full),
+    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % "3.5.1" cross CrossVersion.full),
   )
