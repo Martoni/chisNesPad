@@ -18,6 +18,22 @@ $ sbt "runMain chisnespad.ChisNesPad"
 
 ## Cocotb
 
+Some packages must be installed before to launch cocotb simulation :
+
+- cocotb:
+
+```Shell
+$ python3 -m pip install cocotb
+```
+- cocotbify:
+
+``` Shell
+$ cd /opt
+$ git clone https://github.com/Martoni/chisverilogutils.git
+$ cd chisverilogutils/cocotbify/
+$ python3 -m pip install -e .
+```
+
 Testbench code is done with Python Cocotb package in directory cocotb/chisenespad/. To launch tests do following::
 
 ```
