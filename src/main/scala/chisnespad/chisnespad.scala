@@ -1,8 +1,8 @@
 package chisnespad
 
 import chisel3._
+import circt.stage.ChiselStage
 import chisel3.util._
-import chisel3.stage.{ChiselGeneratorAnnotation,ChiselStage}
 
 class ChisNesPad (val mainClockFreq: Int = 100,
                   val clockFreq: Int = 1,
@@ -100,6 +100,8 @@ class ChisNesPad (val mainClockFreq: Int = 100,
 
 object ChisNesPad extends App {
   println("Generating Verilog sources for ChisNesPad Module")
-  (new ChiselStage).execute(args,
-    Seq(ChiselGeneratorAnnotation(() => new ChisNesPad)))
+  val verilog_src = ChiselStage.emitSystemVerilogFile(
+      new ChisNesPad(),
+      firtoolOpts = Array("-disable-all-randomization",
+                          "-strip-debug-info"))
 }
