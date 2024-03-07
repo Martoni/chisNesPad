@@ -1,8 +1,8 @@
 package chisnespad
 
 import chisel3._
+import circt.stage.ChiselStage
 import chisel3.util._
-import chisel3.stage.{ChiselGeneratorAnnotation,ChiselStage}
 import fpgamacro.generic.ResetGen
 
 class SNesPadLed(val mainClockFreq: Int = 100,
@@ -58,6 +58,8 @@ class SNesPadLed(val mainClockFreq: Int = 100,
 
 object SNesPadLed extends App {
   println("Generating snespadled verilog")
-  (new ChiselStage).execute(args,
-    Seq(ChiselGeneratorAnnotation(() => new SNesPadLed())))
+  val verilog_src = ChiselStage.emitSystemVerilogFile(
+      new SNesPadLed(),
+      firtoolOpts = Array("-disable-all-randomization",
+                          "-strip-debug-info"))
 }
