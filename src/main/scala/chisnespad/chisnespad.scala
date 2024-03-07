@@ -103,5 +103,7 @@ object ChisNesPad extends App {
   val verilog_src = ChiselStage.emitSystemVerilogFile(
       new ChisNesPad(),
       firtoolOpts = Array("-disable-all-randomization",
+                          "--lowering-options=disallowLocalVariables", // avoid 'automatic logic'
+                                                     // https://github.com/chipsalliance/chisel/issues/3706#issuecomment-1907373238
                           "-strip-debug-info"))
 }
