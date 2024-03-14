@@ -59,7 +59,9 @@ class SNesPadLed(val mainClockFreq: Int = 100,
 object SNesPadLed extends App {
   println("Generating snespadled verilog")
   val verilog_src = ChiselStage.emitSystemVerilogFile(
-      new SNesPadLed(),
-      firtoolOpts = Array("-disable-all-randomization",
-                          "-strip-debug-info"))
+    new SNesPadLed(),
+    firtoolOpts = Array("-disable-all-randomization",
+//        "--disable-blackbox-resource-file",
+        "--lowering-options=disallowLocalVariables", // avoid 'automatic logic'
+        "-strip-debug-info"))
 }

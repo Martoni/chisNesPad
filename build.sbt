@@ -24,4 +24,7 @@ lazy val root = (project in file("."))
       "-Ymacro-annotations",
     ),
     addCompilerPlugin("org.chipsalliance" % "chisel-plugin" % chiselVersion cross CrossVersion.full),
-  )
+  ).dependsOn(fpgamacro)
+
+lazy val fpgamacro = RootProject(uri("https://github.com/Martoni/fpgamacro.git"))
+

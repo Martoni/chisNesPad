@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Thu Mar 14 15:52:02 2024
+[*]
+[dumpfile] "/opt/chiselmod/chisNesPad/formal/ChisNesPad/engine_0/trace.vcd"
+[dumpfile_mtime] "Thu Mar 14 15:50:02 2024"
+[dumpfile_size] 1595
+[savefile] "/opt/chiselmod/chisNesPad/formal/chisnespad.gtkw"
+[timestart] 0
+[size] 1920 1029
+[pos] -1 -1
+*-2.628906 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 196
+[signals_width] 134
+[sst_expanded] 1
+[sst_vpaned_height] 306
+@28
+smt_clock
+@420
+smt_step
+@28
+ChisNesPad.reset
+@25
+ChisNesPad.regCount[4:0]
+[pattern_trace] 1
+[pattern_trace] 0

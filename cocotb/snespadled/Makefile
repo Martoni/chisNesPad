@@ -52,8 +52,7 @@ endif
 
 PWD=$(shell pwd)
 
-VERILOG_SOURCES = $(PWD)/$(TOPLEVEL)Cocotb.v \
-				  $(PWD)/../../ResetGen.v
+VERILOG_SOURCES = $(PWD)/$(TOPLEVEL)Cocotb.v
 MODULE=test_snespadled
 
 include $(shell cocotb-config --makefiles)/Makefile.inc
@@ -61,15 +60,15 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 
 endif
 
-$(PWD)/$(TOPLEVEL)Cocotb.v: $(PWD)/../../$(TOPLEVEL).v
-	$(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).v -o $(PWD)/$(TOPLEVEL)Cocotb.v
+$(PWD)/$(TOPLEVEL)Cocotb.v: $(PWD)/../../$(TOPLEVEL).sv
+	$(COCOTBIFY) -v $(PWD)/../../$(TOPLEVEL).sv -o $(PWD)/$(TOPLEVEL)Cocotb.v
 
-$(PWD)/../../$(TOPLEVEL).v: $(PWD)/../../src/main/scala/chisnespad/chisnespad.scala\
+$(PWD)/../../$(TOPLEVEL).sv: $(PWD)/../../src/main/scala/chisnespad/chisnespad.scala\
 							$(PWD)/../../src/main/scala/chisnespad/snespadled.scala
 	cd $(PWD)/../../;sbt "runMain chisnespad.SNesPadLed"
 
 cleanverilog:
-	-rm $(PWD)/../$(TOPLEVEL).v
+	-rm $(PWD)/../$(TOPLEVEL).sv
 
 mrproper:
 	-rm results.xml

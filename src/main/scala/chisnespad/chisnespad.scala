@@ -99,11 +99,19 @@ class ChisNesPad (val mainClockFreq: Int = 100,
 }
 
 object ChisNesPad extends App {
-  println("Generating Verilog sources for ChisNesPad Module")
-  val verilog_src = ChiselStage.emitSystemVerilogFile(
-      new ChisNesPad(),
+  if (args.length == 0) {
+    val filename = "ChisNesPad.v"
+    println("Generate verilog source for ChisNesPad Module")
+    val verilog_src = chisel3.emitVerilog(new ChisNesPad)
+    val filepath = os.pwd / filename
+    if (os.exists(filepath)) os.remove(filepath)
+    os.write(filepath, verilog_src)
+  } else if (args(0) == "--systemVerilog") {
+    println("Generating systemVerilog sources for ChisNesPad Module")
+    ChiselStage.emitSystemVerilogFile( new ChisNesPad(),
       firtoolOpts = Array("-disable-all-randomization",
                           "--lowering-options=disallowLocalVariables", // avoid 'automatic logic'
                                                      // https://github.com/chipsalliance/chisel/issues/3706#issuecomment-1907373238
                           "-strip-debug-info"))
+  }
 }

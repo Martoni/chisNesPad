@@ -56,7 +56,7 @@ readme for install instruction.
 
 ## fpgamacro
 
-Need to install/publish local [fpgamacro](https://github.com/Martoni/fpgamacro.git) project.
+[fpgamacro](https://github.com/Martoni/fpgamacro) dependency is automatically cloned and installed for this project.
 
 # Ressources
 
